@@ -3,9 +3,9 @@ package com.example.bulgariaguesserserver.user;
 import com.example.bulgariaguesserserver.user.dto.CreateUserDto;
 import com.example.bulgariaguesserserver.user.dto.UserDto;
 import com.example.bulgariaguesserserver.util.exception.UserIsPresentException;
+import org.mindrot.jbcrypt.BCrypt;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,9 +17,6 @@ class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
     private ModelMapper modelMapper;
 
     @Override
@@ -28,12 +25,10 @@ class UserServiceImpl implements UserService {
             throw new UserIsPresentException("User already exists");
         }
         var user = modelMapper.map(createUserDto, User.class);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         user.setPoints(0.0);
         user.setLevel(0);
-        user.setStatus(UserStatus.ACTIVE);
         user.setRegistrationDate(LocalDateTime.now());
-        user.setUserRole(UserRole.ROLE_USER);
         userRepository.save(user);
         return modelMapper.map(user, UserDto.class);
     }

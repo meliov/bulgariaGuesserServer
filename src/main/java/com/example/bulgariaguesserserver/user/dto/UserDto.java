@@ -6,7 +6,6 @@ public class UserDto {
     private String email;
     private Integer level;
     private Double points;
-    private String status;
     private String firstName;
 
     private String lastName;
@@ -14,8 +13,6 @@ public class UserDto {
     private String username;
 
     private String registrationDate;
-
-    private String userRole;
 
     private byte[] image;
 
@@ -63,17 +60,6 @@ public class UserDto {
         this.points = points;
     }
 
-
-
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -104,14 +90,6 @@ public class UserDto {
 
     public void setRegistrationDate(String registrationDate) {
         this.registrationDate = registrationDate;
-    }
-
-    public String getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(String userRole) {
-        this.userRole = userRole;
     }
 
     @Override

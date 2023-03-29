@@ -11,8 +11,6 @@ public class CreateUserDto {
 
     private String username;
 
-    private String registrationDate;
-
     public String getPassword() {
         return password;
     }
@@ -53,11 +51,4 @@ public class CreateUserDto {
         this.username = username;
     }
 
-    public String getRegistrationDate() {
-        return registrationDate;
-    }
-
-    public void setRegistrationDate(String registrationDate) {
-        this.registrationDate = registrationDate;
-    }
 }

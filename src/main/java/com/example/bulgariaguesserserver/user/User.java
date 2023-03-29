@@ -22,47 +22,18 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private LocalDateTime registrationDate;
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private UserRole userRole;
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private UserStatus status;
-
-    @Column(nullable = false)
     private String email;
     @Column(nullable = false)
     private Integer level;
-
     @Column(nullable = false)
     private Double points;
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @LazyCollection(LazyCollectionOption.FALSE)
-    @Column(nullable = false)
     private List<City> alreadyPickedCities;
 
     @Lob
-    @Column(nullable = false)
     private byte[] image;
 
-//    @LazyCollection(LazyCollectionOption.FALSE)
-//    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-//    @JoinTable(name = "user_friends", joinColumns = {
-//            @JoinColumn(name = "user_id", referencedColumnName = "id", nullable =   false)}, inverseJoinColumns = {
-//            @JoinColumn(name = "friends_id", referencedColumnName = "id", nullable = false)}, uniqueConstraints=
-//    @UniqueConstraint(columnNames={"user_id", "friends_id"})
-//    )
-//
-//    private List<User> friends;
-
-
-    public UserStatus getStatus() {
-        return status;
-    }
-
-
-    public void setStatus(UserStatus status) {
-        this.status = status;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -72,13 +43,6 @@ public class User extends BaseEntity {
         this.firstName = firstName;
     }
 
-    public UserRole getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
-    }
 
     public String getLastName() {
         return lastName;
@@ -119,14 +83,6 @@ public class User extends BaseEntity {
     public void setEmail(String email) {
         this.email = email;
     }
-
-//    public List<User> getFriends() {
-//        return friends;
-//    }
-//
-//    public void setFriends(List<User> friends) {
-//        this.friends = friends;
-//    }
 
     public List<City> getAlreadyPickedCities() {
         return alreadyPickedCities;
