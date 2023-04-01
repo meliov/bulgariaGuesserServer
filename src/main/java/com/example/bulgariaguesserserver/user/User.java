@@ -38,6 +38,22 @@ public class User extends BaseEntity {
     private byte[] image;
 
 
+    public User() {
+    }
+
+    public User(String firstName, String lastName, String username, String password, LocalDateTime registrationDate, String email, Integer level, Double points, List<City> alreadyPickedCities, byte[] image) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.registrationDate = registrationDate;
+        this.email = email;
+        this.level = level;
+        this.points = points;
+        this.alreadyPickedCities = alreadyPickedCities;
+        this.image = image;
+    }
+
     public void updateUserFromDto(UpdateUserDto userDto){
         this.setImage(userDto.getImage());
         this.setLevel(userDto.getLevel());

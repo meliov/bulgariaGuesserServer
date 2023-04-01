@@ -12,11 +12,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,14 +28,33 @@ public class UserService {
     @Autowired
     private ModelMapper modelMapper;
 
+    private static final List<User> mockedUsers = Arrays.asList(
+            new User("John", "Doe", "johndoe", BCrypt.hashpw("password123", BCrypt.gensalt()), LocalDateTime.of(2022, 3, 25, 10, 30), "johndoe@example.com", 1, 0.0, new ArrayList<>(), null),
+            new User("Jane", "Smith", "janesmith", BCrypt.hashpw("letmein", BCrypt.gensalt()), LocalDateTime.of(2022, 3, 26, 12, 45), "janesmith@example.com", 1, 0.0, new ArrayList<>(), null),
+            new User("Bob", "Johnson", "bobjohnson", BCrypt.hashpw("password123", BCrypt.gensalt()), LocalDateTime.of(2022, 3, 27, 8, 15), "bobjohnson@example.com", 1, 0.0, new ArrayList<>(), null),
+            new User("Alice", "Lee", "alicelee", BCrypt.hashpw("abc123", BCrypt.gensalt()), LocalDateTime.of(2022, 3, 28, 14, 20), "alicelee@example.com", 1, 0.0, new ArrayList<>(), null),
+            new User("David", "Kim", "davidkim", BCrypt.hashpw("password123", BCrypt.gensalt()), LocalDateTime.of(2022, 3, 29, 9, 0), "davidkim@example.com", 1, 0.0, new ArrayList<>(), null),
+            new User("Maggie", "Wang", "maggiewang", BCrypt.hashpw("letmein", BCrypt.gensalt()), LocalDateTime.of(2022, 3, 30, 11, 30), "maggiewang@example.com", 1, 0.0, new ArrayList<>(), null),
+            new User("Tom", "Smith", "tomsmith", BCrypt.hashpw("password123", BCrypt.gensalt()), LocalDateTime.of(2022, 3, 31, 13, 15), "tomsmith@example.com", 1, 0.0, new ArrayList<>(), null),
+            new User("Lisa", "Park", "lisapark", BCrypt.hashpw("abc123", BCrypt.gensalt()), LocalDateTime.of(2022, 4, 1, 16, 40), "lisapark@example.com", 1, 0.0, new ArrayList<>(), null),
+            new User("Mike", "Johnson", "mikejohnson", BCrypt.hashpw("letmein", BCrypt.gensalt()), LocalDateTime.of(2022, 4, 2, 9, 45), "mikejohnson@example.com", 1, 0.0, new ArrayList<>(), null),
+            new User("Sara", "Lee", "saralee", BCrypt.hashpw("password123", BCrypt.gensalt()), LocalDateTime.of(2022, 4, 3, 12, 0), "saralee@example.com", 1, 0.0, new ArrayList<>(), null)
+    );
+
+    @PostConstruct
+    public void mockUserData(){
+        if(userRepository.findAll().isEmpty()) {
+            userRepository.saveAll(mockedUsers);
+        }
+    }
+
     public UserDto createUser(CreateUserDto createUserDto) throws UserIsPresentException {
         System.out.println("In create new user");
         if (userRepository.findAll().stream().anyMatch(e -> e.getEmail().equals(createUserDto.getEmail()) || e.getEmail().equals(createUserDto.getUsername()))) {
             throw new UserIsPresentException("User already exists");
         }
         var user = modelMapper.map(createUserDto, User.class);
-        var salt = BCrypt.gensalt();
-        user.setPassword(BCrypt.hashpw(user.getPassword(), salt));
+        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         user.setPoints(0.0);
         user.setLevel(1);
         user.setRegistrationDate(LocalDateTime.now());
