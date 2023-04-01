@@ -1,6 +1,8 @@
 package com.example.bulgariaguesserserver.user;
 
 import com.example.bulgariaguesserserver.city.City;
+import com.example.bulgariaguesserserver.user.dto.UpdateUserDto;
+import com.example.bulgariaguesserserver.user.dto.UserDto;
 import com.example.bulgariaguesserserver.util.BaseEntity;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -19,6 +21,7 @@ public class User extends BaseEntity {
     private String username;
     @Column(nullable = false)
     private String password;
+
     @Column(nullable = false)
     private LocalDateTime registrationDate;
     @Column(nullable = false)
@@ -34,6 +37,12 @@ public class User extends BaseEntity {
     @Lob
     private byte[] image;
 
+
+    public void updateUserFromDto(UpdateUserDto userDto){
+        this.setImage(userDto.getImage());
+        this.setLevel(userDto.getLevel());
+        this.setPoints(userDto.getPoints());
+    }
 
     public String getFirstName() {
         return firstName;
@@ -109,6 +118,16 @@ public class User extends BaseEntity {
 
     public User setPoints(Double points) {
         this.points = points;
+        return this;
+    }
+
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public User setImage(byte[] image) {
+        this.image = image;
         return this;
     }
 }
