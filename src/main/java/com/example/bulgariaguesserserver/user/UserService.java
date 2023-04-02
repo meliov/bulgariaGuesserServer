@@ -59,6 +59,7 @@ public class UserService {
         user.setLevel(1);
         user.setRegistrationDate(LocalDateTime.now());
         userRepository.save(user);
+        initialiseLoggedInUser(user);
         return modelMapper.map(user, UserDto.class);
     }
 
