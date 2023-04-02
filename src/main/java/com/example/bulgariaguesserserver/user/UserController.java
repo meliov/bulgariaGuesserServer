@@ -67,4 +67,13 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
+    @PostMapping("/username-exists")
+    public ResponseEntity<Boolean> usernameExists(@RequestBody String username) {
+        return ResponseEntity.ok(userService.usernameExists(username));
+    }
+
+    @PostMapping("/email-exists")
+    public ResponseEntity<Boolean> emailExists(@RequestBody String email) {
+        return ResponseEntity.ok(userService.emailExists(email));
+    }
 }

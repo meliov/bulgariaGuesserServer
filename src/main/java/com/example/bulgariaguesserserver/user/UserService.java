@@ -91,6 +91,7 @@ public class UserService {
     }
 
     public UserDto updateCurrentUser(UpdateUserDto userDto) {
+        System.out.println("In updateCurrentUser");
         User userToUpdate;
         try {
             var optionalUser = userRepository.findById(userDto.getId());
@@ -108,6 +109,7 @@ public class UserService {
     }
 
     public void addCityForLoggedInUser(City city) {
+        System.out.println("In addCityForLoggedInUser");
         if (loggedInUser.getCurrentUser().getAlreadyPickedCities() == null
                 || loggedInUser.getCurrentUser().getAlreadyPickedCities().size() >= MAX_STORED_CITIES) {
             loggedInUser.getCurrentUser().setAlreadyPickedCities(new ArrayList<>());
@@ -118,6 +120,7 @@ public class UserService {
     }
 
     public List<Long> getLoggedInUserCitiesIds() {
+        System.out.println("In getLoggedInUserCitiesIds");
         return loggedInUser
                 .getCurrentUser()
                 .getAlreadyPickedCities()
@@ -127,10 +130,12 @@ public class UserService {
     }
 
     public LoggedInUser getLoggedInUser() {
+        System.out.println("In getLoggedInUser");
         return loggedInUser;
     }
 
     public List<UserDto> getAllUsers(){
+        System.out.println("In getAllUsers");
        return userRepository
                 .findAll()
                 .stream()
@@ -139,6 +144,16 @@ public class UserService {
                         .reversed())
                .map(user -> modelMapper.map(user, UserDto.class))
                 .collect(Collectors.toList());
+    }
+
+    public Boolean usernameExists(String username){
+        System.out.println("In usernameExists");
+        return userRepository.findUserByUsername(username) != null;
+    }
+
+    public Boolean emailExists(String email){
+        System.out.println("In emailExists");
+        return userRepository.findUserByEmail(email) != null;
     }
 
     private void initialiseLoggedInUser(User user){
