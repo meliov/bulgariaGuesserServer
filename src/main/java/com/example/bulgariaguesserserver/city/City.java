@@ -13,6 +13,7 @@ public class City extends BaseEntity {
     @Column(nullable = false)
     private Integer level;
 
+    private static Integer LEVEL_INCREASE = 0;
     public String getName() {
         return name;
     }
@@ -25,9 +26,13 @@ public class City extends BaseEntity {
     public City() {
     }
 
-    public City(String name, Integer level) {
+
+    public City(String name) {
         this.name = name;
-        this.level = level;
+        this.level = ++LEVEL_INCREASE;
+        if(LEVEL_INCREASE == 10){
+            LEVEL_INCREASE = 0;
+        }
     }
 
     public Integer getLevel() {

@@ -36,7 +36,7 @@ public class CityService {
     @PostConstruct
     public void mockCityData(){
         if(cityRepository.findAll().isEmpty()) {
-            var mappedCities = Arrays.asList(cityNames).parallelStream().map(name -> new City(name, 1)).collect(Collectors.toList());
+            var mappedCities = Arrays.asList(cityNames).parallelStream().map(name -> new City(name)).collect(Collectors.toList());
             cityRepository.saveAll(mappedCities);
             cities = cityRepository.findAll();
         }else{
