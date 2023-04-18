@@ -14,7 +14,12 @@ public class CityController {
 
 
     @GetMapping("/random")
-    public CityDto getRandomCity() {
+    public CityDto getRandomCityMatchingUserLevel() {
+        return cityService.getRandomCityMatchingUserLevel();
+    }
+
+    @GetMapping("/random/all-levels")
+    public CityDto getRandomCity(){
         return cityService.getRandomCity();
     }
 

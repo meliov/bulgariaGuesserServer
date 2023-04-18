@@ -44,8 +44,8 @@ public class CityService {
         }
     }
 
-    public CityDto getRandomCity() {
-        System.out.println("In getRandomCity()");
+    public CityDto getRandomCityMatchingUserLevel() {
+        System.out.println("In getRandomCityMatchingUserLevel()");
         Random random = new Random();
         List<City> userLevelMatchingCitiesLevel = getFilteredCitiesByUserLevelWhichAreNotPresentInTheLoggedInUser();
         int randomCityIndex = random.nextInt(userLevelMatchingCitiesLevel.size()) + 1;
@@ -57,6 +57,18 @@ public class CityService {
         userService.addCityForLoggedInUser(city.get());
         return modelMapper.map(city.get(), CityDto.class);
     }
+
+    public CityDto getRandomCity() {
+        System.out.println("In getRandomCity()");
+        Random random = new Random();
+        Integer randomCityIdFrom1to94 = random.nextInt(cityNames.length) + 1;
+        var city = cityRepository.findById(randomCityIdFrom1to94.longValue());
+        if (city.isEmpty()) {
+            throw new RuntimeException("City with id = " + randomCityIdFrom1to94 + "does not exist.");
+        }
+        return modelMapper.map(city.get(), CityDto.class);
+    }
+
 
     /**
      * extracts cities that are not present in the user and match his level
