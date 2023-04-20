@@ -33,14 +33,15 @@ public class CityService {
             "Dolni Chiflik", "Sredets", "Kostenets", "Tsarevo", "Sozopol", "Tervel", "Aksakovo", "Pavlikeni", "Belogradchik", "Krichim",
             "Straldzha", "Zlatitsa", "Kuklen", "Simeonovgrad", "Suvorovo", "Kosten", "Slivnitsa", "Vetovo", "Sungurlare", "Isperih", "Devin",
             "Devetaki", "Lyubimets", "Letnitsa"};
+
     @PostConstruct
-    public void mockCityData(){
-        if(cityRepository.findAll().isEmpty()) {
+    public void mockCityData() {
+        if (cityRepository.findAll().isEmpty()) {
             var mappedCities = Arrays.asList(cityNames).parallelStream().map(name -> new City(name)).collect(Collectors.toList());
             cityRepository.saveAll(mappedCities);
             cities = cityRepository.findAll();
-        }else{
-            cities =  cityRepository.findAll();
+        } else {
+            cities = cityRepository.findAll();
         }
     }
 
@@ -48,7 +49,7 @@ public class CityService {
         System.out.println("In getRandomCityMatchingUserLevel()");
         Random random = new Random();
         List<City> userLevelMatchingCitiesLevel = getFilteredCitiesByUserLevelWhichAreNotPresentInTheLoggedInUser();
-        int randomCityIndex = random.nextInt(userLevelMatchingCitiesLevel.size()) + 1;
+        int randomCityIndex = random.nextInt(userLevelMatchingCitiesLevel.size());
         Long randomCityId = userLevelMatchingCitiesLevel.get(randomCityIndex).getId();
         var city = cityRepository.findById(randomCityId);
         if (city.isEmpty()) {
@@ -72,9 +73,10 @@ public class CityService {
 
     /**
      * extracts cities that are not present in the user and match his level
+     *
      * @return
      */
-    private List<City> getFilteredCitiesByUserLevelWhichAreNotPresentInTheLoggedInUser(){
+    private List<City> getFilteredCitiesByUserLevelWhichAreNotPresentInTheLoggedInUser() {
         return cities
                 .stream()
                 .filter(city -> city.getLevel().equals(userService.getLoggedInUser().getCurrentUser().getLevel()))
