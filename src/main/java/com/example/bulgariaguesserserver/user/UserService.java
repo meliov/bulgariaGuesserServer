@@ -98,7 +98,7 @@ public class UserService {
             if (optionalUser.isPresent()) {
                 userToUpdate = optionalUser.get();
             } else {
-                throw new Exception("");
+                throw new Exception("Unknown User");
             }
             userToUpdate.updateUserFromDto(userDto);
         } catch (Exception e) {
