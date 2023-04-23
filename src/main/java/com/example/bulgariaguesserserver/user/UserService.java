@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
 
-    private static final Integer MAX_STORED_CITIES = 10;
+    private static final Integer MAX_STORED_CITIES = 9;
     private static final LoggedInUser loggedInUser = new LoggedInUser();
     @Autowired
     private UserRepository userRepository;

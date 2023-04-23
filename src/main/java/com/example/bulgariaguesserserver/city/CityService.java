@@ -45,6 +45,7 @@ public class CityService {
         }
     }
 
+
     public CityDto getRandomCityMatchingUserLevel() {
         System.out.println("In getRandomCityMatchingUserLevel()");
         Random random = new Random();
