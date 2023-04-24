@@ -2,7 +2,6 @@ package com.example.bulgariaguesserserver.user;
 
 import com.example.bulgariaguesserserver.city.City;
 import com.example.bulgariaguesserserver.user.dto.CreateUserDto;
-import com.example.bulgariaguesserserver.user.dto.LoggedInUser;
 import com.example.bulgariaguesserserver.user.dto.UpdateUserDto;
 import com.example.bulgariaguesserserver.user.dto.UserDto;
 import com.example.bulgariaguesserserver.util.BaseEntity;

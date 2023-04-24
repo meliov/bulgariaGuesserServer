@@ -23,7 +23,7 @@ public class CityService {
     @Autowired
     private UserService userService;
 
-    private static final String[] cityNames = {"Sofia", "Plovdiv", "Varna", "Burgas", "Ruse", "Stara Zagora", "Pleven", "Sliven", "Dobrich", "Shumen",
+    private static final List<String> cityNames = Arrays.asList("Sofia", "Plovdiv", "Varna", "Burgas", "Ruse", "Stara Zagora", "Pleven", "Sliven", "Dobrich", "Shumen",
             "Haskovo", "Pazardzhik", "Yambol", "Blagoevgrad", "Veliko Tarnovo", "Vidin", "Montana", "Gabrovo", "Asenovgrad", "Kazanlak",
             "Kyustendil", "Pernik", "Dimitrovgrad", "Svishtov", "Nova Zagora", "Targovishte", "Dupnitsa", "Lovech", "Silistra", "Razgrad",
             "Gorna Oryahovitsa", "Petrich", "Sandanski", "Samokov", "Sevlievo", "Lom", "Karlovo", "Troyan", "Svilengrad", "Harmanli",
@@ -32,12 +32,12 @@ public class CityService {
             "Belene", "Provadia", "Nessebar", "Dryanovo", "Devnya", "Lyaskovets", "Hisarya", "Kavarna", "Tutrakan", "Elin Pelin",
             "Dolni Chiflik", "Sredets", "Kostenets", "Tsarevo", "Sozopol", "Tervel", "Aksakovo", "Pavlikeni", "Belogradchik", "Krichim",
             "Straldzha", "Zlatitsa", "Kuklen", "Simeonovgrad", "Suvorovo", "Kosten", "Slivnitsa", "Vetovo", "Sungurlare", "Isperih", "Devin",
-            "Devetaki", "Lyubimets", "Letnitsa"};
+            "Devetaki", "Lyubimets", "Letnitsa");
 
     @PostConstruct
     public void mockCityData() {
         if (cityRepository.findAll().isEmpty()) {
-            var mappedCities = Arrays.asList(cityNames).parallelStream().map(name -> new City(name)).collect(Collectors.toList());
+            var mappedCities =cityNames.parallelStream().map(name -> new City(name)).collect(Collectors.toList());
             cityRepository.saveAll(mappedCities);
             cities = cityRepository.findAll();
         } else {
@@ -63,7 +63,7 @@ public class CityService {
     public CityDto getRandomCity() {
         System.out.println("In getRandomCity()");
         Random random = new Random();
-        Integer randomCityIdFrom1to94 = random.nextInt(cityNames.length) + 1;
+        Integer randomCityIdFrom1to94 = random.nextInt(cityNames.size()) + 1;
         var city = cityRepository.findById(randomCityIdFrom1to94.longValue());
         if (city.isEmpty()) {
             throw new RuntimeException("City with id = " + randomCityIdFrom1to94 + "does not exist.");

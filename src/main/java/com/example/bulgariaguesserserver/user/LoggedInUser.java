@@ -1,6 +1,4 @@
-package com.example.bulgariaguesserserver.user.dto;
-
-import com.example.bulgariaguesserserver.user.User;
+package com.example.bulgariaguesserserver.user;
 
 /**
  * Stores the current logged in user, because so far authentication and authorization is out of the box
